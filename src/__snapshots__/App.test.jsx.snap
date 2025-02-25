@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`App component > renders navbar in app 1`] = `
+<div>
+  <div
+    class="navbar"
+  >
+    <a
+      data-discover="true"
+      href="/"
+    >
+      <button>
+        Home
+      </button>
+    </a>
+    <a
+      data-discover="true"
+      href="/shop"
+    >
+      <button>
+        Shop
+      </button>
+    </a>
+    <a
+      data-discover="true"
+      href="/cart"
+    >
+      <button>
+        Cart
+      </button>
+    </a>
+  </div>
+</div>
+`;
