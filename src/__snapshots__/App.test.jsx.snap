@@ -30,5 +30,8 @@ exports[`App component > renders navbar in app 1`] = `
       </button>
     </a>
   </div>
+  <h3>
+    Home
+  </h3>
 </div>
 `;
