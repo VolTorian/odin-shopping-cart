@@ -9,22 +9,16 @@ import routes from "./routes";
 const router = createMemoryRouter(routes);
 
 describe("App component", () => {
-    // it("renders navbar in app", () => {
-    //     const { container } = render(
-    //         <MemoryRouter>
-    //             <App />
-    //         </MemoryRouter>
-    //     );
+    it("renders navbar in app", () => {
+        const { container } = render(<RouterProvider router={router} />);
 
-    //     expect(container).toMatchSnapshot();
-    // });
+        expect(container).toMatchSnapshot();
+    });
 
     it("home button sends to home page", async () => {
         const user = userEvent.setup();
 
-        render(
-            <RouterProvider router={router} />
-        );
+        render(<RouterProvider router={router} />);
 
         const homeButton = screen.getByRole("button", { name: "Home"});
 
@@ -32,32 +26,25 @@ describe("App component", () => {
         expect(screen.getByRole("heading").textContent).toMatch(/Home/i);
     });
 
-    // it("shop button sends to shop page", async () => {
-    //     const user = userEvent.setup();
+    it("shop button sends to shop page", async () => {
+        const user = userEvent.setup();
 
-    //     render(
-    //         <MemoryRouter>
-    //             <App />
-    //         </MemoryRouter>
-    //     );
+        render(<RouterProvider router={router} />);
 
-    //     const shopButton = screen.getByRole("button", { name: "Shop"});
+        const shopButton = screen.getByRole("button", { name: "Shop"});
 
-    //     await user.click(shopButton);
-    //     expect(screen.getByRole("heading").textContent).toMatch(/Shop/i);
-    // });
+        await user.click(shopButton);
+        expect(screen.getByRole("heading").textContent).toMatch(/Shop/i);
+    });
 
-    // it("cart button sends to cart page", async () => {
-    //     const user = userEvent.setup();
+    it("cart button sends to cart page", async () => {
+        const user = userEvent.setup();
 
-    //     render(<MemoryRouter>
-    //         <App />
-    //     </MemoryRouter>
-    //     );
+        render(<RouterProvider router={router} />);
 
-    //     const cartButton = screen.getByRole("button", { name: "Cart"});
+        const cartButton = screen.getByRole("button", { name: "Cart"});
 
-    //     await user.click(cartButton);
-    //     expect(screen.getByRole("heading").textContent).toMatch(/Cart/i);
-    // });
+        await user.click(cartButton);
+        expect(screen.getByRole("heading").textContent).toMatch(/Cart/i);
+    });
 });
