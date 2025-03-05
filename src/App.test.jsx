@@ -1,9 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter, RouterProvider, createMemoryRouter } from 'react-router';
-
-import App from "./App";
+import { RouterProvider, createMemoryRouter } from 'react-router';
 
 import routes from "./routes";
 const router = createMemoryRouter(routes);
