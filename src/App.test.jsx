@@ -45,4 +45,14 @@ describe("App component", () => {
         await user.click(cartButton);
         expect(screen.getByRole("heading").textContent).toMatch(/Cart/i);
     });
+
+    it("bad url leads to 404 page", () => {
+        const badRouter = createMemoryRouter(routes, {
+            initialEntries: ["/", "/asd"]
+        });
+
+        render(<RouterProvider router={badRouter} />);
+
+        expect(screen.getByRole("heading").textContent).toMatch(/404/i);
+    });
 });
