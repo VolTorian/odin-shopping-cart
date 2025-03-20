@@ -32,7 +32,7 @@ describe("App component", () => {
         const shopButton = screen.getByRole("button", { name: "Shop"});
 
         await user.click(shopButton);
-        expect(screen.getByRole("heading").textContent).toMatch(/Shop/i);
+        expect(screen.getAllByRole("heading")[0].textContent).toMatch(/Shop/i);
     });
 
     it("cart button sends to cart page", async () => {
