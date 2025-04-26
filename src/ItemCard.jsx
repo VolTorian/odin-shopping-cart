@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-function ItemCard({ data }) {
+function ItemCard({ data, addToCartCallback }) {
     const [amount, setAmount] = useState(1);
 
-    const handleAmountChange = (e) => {
+    function handleAmountChange(e) {
         const newAmount = e.target.value;
 
         if (newAmount === "") {
@@ -13,6 +13,10 @@ function ItemCard({ data }) {
             setAmount(parseInt(newAmount));
         }
     };
+
+    function addToCart() {
+        addToCartCallback(data.id);
+    }
 
     return (
         <div className="item-card">
@@ -25,7 +29,7 @@ function ItemCard({ data }) {
             <div className="item-card-buttons">
                 <button>Details</button>
                 <input type="number" step="1" min="0" value={amount} onChange={handleAmountChange}/>
-                <button>Add to Cart</button>
+                <button onClick={addToCart}>Add to Cart</button>
             </div>
         </div>
     )

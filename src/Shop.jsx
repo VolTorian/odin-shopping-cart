@@ -2,9 +2,9 @@ import { useOutletContext } from "react-router";
 import ItemCard from "./ItemCard";
 
 function Shop () {
-    const [shopItems] = useOutletContext();
+    const [shopItems, addToCart] = useOutletContext();
 
-    const hasNull = shopItems.some((item) => item === null);  
+    const hasNull = shopItems.some((item) => item === null);
     
     return (
         <div className="shop">
@@ -14,7 +14,7 @@ function Shop () {
                     <h3>Loading, please wait...</h3>
                 ) : (
                     shopItems.map((item) => {
-                        return <ItemCard key={item.id} data={item} />
+                        return <ItemCard key={item.id} data={item} addToCartCallback={addToCart} />
                     })
                 )}
             </div>

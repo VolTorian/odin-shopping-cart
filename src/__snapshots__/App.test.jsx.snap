@@ -26,7 +26,8 @@ exports[`App component > renders navbar in app 1`] = `
       href="/cart"
     >
       <button>
-        Cart
+        Cart: 
+        0
       </button>
     </a>
   </div>

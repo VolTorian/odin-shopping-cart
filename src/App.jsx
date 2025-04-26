@@ -8,6 +8,7 @@ import NavBar from "./NavBar";
 function App() {
     const SHOP_ITEM_COUNT = 20;
     const [shopItems, setShopItems] = useState([]);
+    const [cartItems, setCartItems] = useState(new Map());
 
     useEffect(() => {
         fetchItems(SHOP_ITEM_COUNT);
@@ -31,10 +32,17 @@ function App() {
         };
     }
 
+    function addToCart(item) {
+        const newMap = new Map(cartItems);
+        newMap.set(item, 1)
+
+        setCartItems(newMap);
+    }
+
     return (
         <>
-            <NavBar />
-            <Outlet context={[shopItems]} />
+            <NavBar amountInCart={cartItems.size}/>
+            <Outlet context={[shopItems, addToCart]} />
         </>
     );
 }
