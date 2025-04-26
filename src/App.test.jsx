@@ -40,7 +40,7 @@ describe("App component", () => {
 
         render(<RouterProvider router={router} />);
 
-        const cartButton = screen.getByRole("button", { name: "Cart"});
+        const cartButton = screen.getByRole("button", { name: /^Cart:\s*\d*/ });
 
         await user.click(cartButton);
         expect(screen.getByRole("heading").textContent).toMatch(/Cart/i);
@@ -54,5 +54,21 @@ describe("App component", () => {
         render(<RouterProvider router={badRouter} />);
 
         expect(screen.getByRole("heading").textContent).toMatch(/404/i);
+    });
+
+    it("ability to add one of the first item to cart", async () => {
+        const user = userEvent.setup();
+        const initialPage = createMemoryRouter(routes, {
+            initialEntries: ["/shop"]
+        });
+        
+        render(<RouterProvider router={initialPage} />);
+
+        const addToCartButtons = await screen.findAllByRole("button", { name: /add to cart/i });
+        expect(addToCartButtons.length).toBeGreaterThan(0);
+
+        const cartButton = screen.getByRole("button", { name: /^Cart:\s*0/ });
+        await user.click(addToCartButtons[0]);
+        expect(screen.getByRole("button", { name: /^Cart:\s*1/ })).toBeInTheDocument();
     });
 });
