@@ -7,17 +7,29 @@ function ItemCard({ data, addToCartCallback }) {
         const newAmount = e.target.value;
 
         if (newAmount === "") {
-            setAmount(1);
+            setAmount("");
         }
-        else if (parseInt(newAmount) >= 1) {
+        else if (parseInt(newAmount) >= 0) {
             setAmount(parseInt(newAmount));
         }
     };
 
+    function handleKeyDown(e) {
+        if (e.key === "-" || e.key === "e" || e.key === "+" || e.key === "E") {
+            e.preventDefault();
+        }
+    }
+
+    function handleLoseFocus() {
+        if (amount === "") {
+            setAmount(0);
+        }
+    }
+
     function addToCart() {
         const item = {
             id: data.id,
-            amount: amount
+            amount: ((amount === "") ? 0 : amount)
         };
         addToCartCallback(item);
     }
@@ -32,7 +44,7 @@ function ItemCard({ data, addToCartCallback }) {
             <div className="item-rating">{data.rating.rate}/5 out of {data.rating.count} ratings</div>
             <div className="item-card-buttons">
                 <button>Details</button>
-                <input type="number" step="1" min="0" value={amount} onChange={handleAmountChange}/>
+                <input type="number" step="1" min="0" value={amount} onChange={handleAmountChange} onKeyDown={handleKeyDown} onBlur={handleLoseFocus}/>
                 <button onClick={addToCart}>Add to Cart</button>
             </div>
         </div>
