@@ -15,7 +15,11 @@ function ItemCard({ data, addToCartCallback }) {
     };
 
     function addToCart() {
-        addToCartCallback(data.id);
+        const item = {
+            id: data.id,
+            amount: amount
+        };
+        addToCartCallback(item);
     }
 
     return (

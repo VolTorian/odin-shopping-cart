@@ -9,6 +9,7 @@ function App() {
     const SHOP_ITEM_COUNT = 20;
     const [shopItems, setShopItems] = useState([]);
     const [cartItems, setCartItems] = useState(new Map());
+    const [cartAmount, setCartAmount] = useState(0);
 
     useEffect(() => {
         fetchItems(SHOP_ITEM_COUNT);
@@ -34,14 +35,20 @@ function App() {
 
     function addToCart(item) {
         const newMap = new Map(cartItems);
-        newMap.set(item, 1)
+        newMap.set(item.id, item.amount)
+
+        let amount = 0;
+        newMap.forEach((itemAmount, itemId) => {
+            amount += itemAmount;
+        });
 
         setCartItems(newMap);
+        setCartAmount(amount);
     }
 
     return (
         <>
-            <NavBar amountInCart={cartItems.size}/>
+            <NavBar amountInCart={cartAmount}/>
             <Outlet context={[shopItems, addToCart]} />
         </>
     );
