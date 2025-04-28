@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RouterProvider, createMemoryRouter } from 'react-router';
 
@@ -70,5 +70,24 @@ describe("App component", () => {
         const cartButton = screen.getByRole("button", { name: /^Cart:\s*0/ });
         await user.click(addToCartButtons[0]);
         expect(screen.getByRole("button", { name: /^Cart:\s*1/ })).toBeInTheDocument();
+    });
+
+    it ("add more than one of the same item to cart", async () => {
+        const user = userEvent.setup();
+        const initialPage = createMemoryRouter(routes, {
+            initialEntries: ["/shop"]
+        });
+        
+        render(<RouterProvider router={initialPage} />);
+
+        const amountInputs = await screen.findAllByRole("spinbutton");
+        expect(amountInputs.length).toBeGreaterThan(0);
+
+        const addToCartButtons = await screen.findAllByRole("button", { name: /add to cart/i });
+        expect(addToCartButtons.length).toBeGreaterThan(0);
+
+        fireEvent.change(amountInputs[0], { target: { value: "4" } });
+        await user.click(addToCartButtons[0]);
+        expect(screen.getByRole("button", { name: /^Cart:\s*4/ })).toBeInTheDocument();
     });
 });
