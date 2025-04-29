@@ -27,9 +27,13 @@ function ItemCard({ data, addToCartCallback }) {
     }
 
     function addToCart() {
+        if (amount === "" || amount === 0) {
+            return;
+        }
+
         const item = {
             id: data.id,
-            amount: ((amount === "") ? 0 : amount)
+            amount: amount
         };
         addToCartCallback(item);
     }

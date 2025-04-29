@@ -35,7 +35,13 @@ function App() {
 
     function addToCart(item) {
         const newMap = new Map(cartItems);
-        newMap.set(item.id, item.amount)
+
+        if (newMap.has(item.id)) {
+            newMap.set(item.id, newMap.get(item.id) + item.amount);
+        }
+        else {
+            newMap.set(item.id, item.amount)
+        }
 
         let amount = 0;
         newMap.forEach((itemAmount, itemId) => {
