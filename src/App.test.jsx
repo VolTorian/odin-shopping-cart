@@ -90,4 +90,28 @@ describe("App component", () => {
         await user.click(addToCartButtons[0]);
         expect(screen.getByRole("button", { name: /^Cart:\s*4/ })).toBeInTheDocument();
     });
+
+    it ("add same item to cart multiple times", async() => {
+        const user = userEvent.setup();
+        const initialPage = createMemoryRouter(routes, {
+            initialEntries: ["/shop"]
+        });
+        
+        render(<RouterProvider router={initialPage} />);
+
+        const amountInputs = await screen.findAllByRole("spinbutton");
+        expect(amountInputs.length).toBeGreaterThan(0);
+
+        const addToCartButtons = await screen.findAllByRole("button", { name: /add to cart/i });
+        expect(addToCartButtons.length).toBeGreaterThan(0);
+
+        fireEvent.change(amountInputs[1], { target: { value: "2" } });
+        await user.click(addToCartButtons[1]);
+        fireEvent.change(amountInputs[1], { target: { value: "0" } });
+        await user.click(addToCartButtons[1]);
+        fireEvent.change(amountInputs[1], { target: { value: "4" } });
+        await user.click(addToCartButtons[1]);
+
+        expect(screen.getByRole("button", { name: /^Cart:\s*6/ })).toBeInTheDocument();
+    })
 });
