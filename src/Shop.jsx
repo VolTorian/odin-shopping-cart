@@ -2,7 +2,7 @@ import { useOutletContext } from "react-router";
 import ItemCard from "./ItemCard";
 
 function Shop () {
-    const [shopItems, addToCart] = useOutletContext();
+    const { shopItems, addToCart } = useOutletContext();
 
     const hasNull = shopItems.some((item) => item === null);
     

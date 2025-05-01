@@ -48,6 +48,8 @@ function App() {
             amount += itemAmount;
         });
 
+        console.log(cartItems)
+
         setCartItems(newMap);
         setCartAmount(amount);
     }
@@ -55,7 +57,7 @@ function App() {
     return (
         <>
             <NavBar amountInCart={cartAmount}/>
-            <Outlet context={[shopItems, addToCart]} />
+            <Outlet context={{ shopItems, addToCart, cartItems }} />
         </>
     );
 }
