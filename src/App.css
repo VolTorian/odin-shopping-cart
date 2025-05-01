@@ -53,8 +53,15 @@ body {
     height: auto;
 }
 
-.item-card-buttons {
+.item-rating {
     margin-top: auto;
+}
+
+.item-rating, .item-price {
+    margin-bottom: .5rem;
+}
+
+.item-card-buttons {
     display: flex;
     justify-content: center;
 }
