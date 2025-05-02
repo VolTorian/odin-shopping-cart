@@ -33,6 +33,7 @@ function ItemCard({ data, addToCartCallback }) {
 
         const item = {
             id: data.id,
+            title: data.title,
             amount: amount
         };
         addToCartCallback(item);
