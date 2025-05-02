@@ -1,4 +1,5 @@
 import { useOutletContext } from "react-router";
+import CartItemListing from "./CartItemListing";
 
 function Cart () {
     const { cartItems } = useOutletContext();
@@ -9,7 +10,9 @@ function Cart () {
             {cartItems.size === 0 ? (
                 <div>Your cart is empty</div>
             ) : (
-                <div>Nonempty cart</div>
+                Array.from(cartItems.entries()).map(([id, data]) => {
+                    return <CartItemListing key={id} data={data}/>;
+                })
             )}
         </div>
     );
