@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RouterProvider, createMemoryRouter } from 'react-router';
 
@@ -91,7 +91,7 @@ describe("App component", () => {
         expect(screen.getByRole("button", { name: /^Cart:\s*4/ })).toBeInTheDocument();
     });
 
-    it ("add same item to cart multiple times", async() => {
+    it ("add same item to cart multiple times", async () => {
         const user = userEvent.setup();
         const initialPage = createMemoryRouter(routes, {
             initialEntries: ["/shop"]
@@ -113,5 +113,38 @@ describe("App component", () => {
         await user.click(addToCartButtons[1]);
 
         expect(screen.getByRole("button", { name: /^Cart:\s*6/ })).toBeInTheDocument();
-    })
+    });
+
+    it ("added items show up in cart page", async () => {
+        const user = userEvent.setup();
+        const initialPage = createMemoryRouter(routes, {
+            initialEntries: ["/shop"]
+        });
+        
+        render(<RouterProvider router={initialPage} />);
+
+        expect(screen.getByRole("heading", { name: /loading/i })).toBeInTheDocument();
+        await waitForElementToBeRemoved(() => screen.getByRole('heading', { name: /loading/i }));
+        
+        const itemNames = screen.getAllByRole("heading").slice(1).map((name) => name.textContent);
+        const amountInputs = screen.getAllByRole("spinbutton");
+        expect(amountInputs.length).toBeGreaterThan(0);
+        const addToCartButtons = screen.getAllByRole("button", { name: /add to cart/i });
+        expect(addToCartButtons.length).toBeGreaterThan(0);
+
+        fireEvent.change(amountInputs[1], { target: { value: "2" } });
+        await user.click(addToCartButtons[1]);
+        const itemName1 = itemNames[1];
+        fireEvent.change(amountInputs[3], { target: { value: "3" } });
+        await user.click(addToCartButtons[3]);
+        const itemName3 = itemNames[3];
+
+        const cartButton = screen.getByRole("button", { name: /^Cart:\s*5/ });
+        expect(cartButton).toBeInTheDocument();
+        await user.click(cartButton);
+        const headings = screen.getAllByRole("heading");
+        expect(headings[0].textContent).toMatch("Cart");
+        expect(headings[1].textContent).toMatch(itemName1);
+        expect(headings[2].textContent).toMatch(itemName3);
+    });
 });
