@@ -41,7 +41,12 @@ function App() {
             newMap.set(item.id, { ...existingItem, amount: existingItem.amount + item.amount });
         }
         else {
-            newMap.set(item.id, { title: item.title, amount: item.amount });
+            newMap.set(item.id, {
+                title: item.title,
+                amount: item.amount,
+                image: item.image,
+                pricePer: item.pricePer
+            });
         }
 
         let amount = 0;

@@ -7,13 +7,15 @@ function Cart () {
     return (
         <div>
             <h3>Cart</h3>
-            {cartItems.size === 0 ? (
-                <div>Your cart is empty</div>
-            ) : (
-                Array.from(cartItems.entries()).map(([id, data]) => {
-                    return <CartItemListing key={id} data={data}/>;
-                })
-            )}
+            <div className="cart-items-section">
+                {cartItems.size === 0 ? (
+                    <div>Your cart is empty</div>
+                ) : (
+                    Array.from(cartItems.entries()).map(([id, data]) => {
+                        return <CartItemListing key={id} data={data}/>;
+                    })
+                )}
+            </div>
         </div>
     );
 }

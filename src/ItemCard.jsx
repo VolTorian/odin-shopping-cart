@@ -34,7 +34,9 @@ function ItemCard({ data, addToCartCallback }) {
         const item = {
             id: data.id,
             title: data.title,
-            amount: amount
+            amount: amount,
+            image: data.image,
+            pricePer: data.price
         };
         addToCartCallback(item);
     }
