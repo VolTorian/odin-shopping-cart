@@ -10,7 +10,7 @@ function Cart () {
             total += data.pricePer * data.amount;
         });
 
-        return total;
+        return total.toFixed(2);
     }
 
     return (

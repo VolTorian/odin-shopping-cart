@@ -49,7 +49,7 @@ function ItemCard({ data, addToCartCallback }) {
             </div>
             <h4 className="item-title">{data.title}</h4>
             <div className="item-rating">{data.rating.rate}/5 out of {data.rating.count} ratings</div>
-            <div className="item-price">${data.price}</div>
+            <div className="item-price">${data.price.toFixed(2)}</div>
             <div className="item-card-buttons">
                 <button>Details</button>
                 <input type="number" step="1" min="0" value={amount} onChange={handleAmountChange} onKeyDown={handleKeyDown} onBlur={handleLoseFocus}/>
