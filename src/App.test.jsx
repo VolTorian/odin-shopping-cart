@@ -147,4 +147,40 @@ describe("App component", () => {
         expect(headings[1].textContent).toMatch(itemName1);
         expect(headings[2].textContent).toMatch(itemName3);
     });
+
+    it ("can remove items from cart page", async () => {
+        const user = userEvent.setup();
+        const initialPage = createMemoryRouter(routes, {
+            initialEntries: ["/shop"]
+        });
+        
+        render(<RouterProvider router={initialPage} />);
+
+        await waitForElementToBeRemoved(() => screen.getByRole('heading', { name: /loading/i }));
+        
+        const itemNames = screen.getAllByRole("heading").slice(1).map((name) => name.textContent);
+        const amountInputs = screen.getAllByRole("spinbutton");
+        const addToCartButtons = screen.getAllByRole("button", { name: /add to cart/i });
+
+        fireEvent.change(amountInputs[1], { target: { value: "2" } });
+        await user.click(addToCartButtons[1]);
+        const itemName1 = itemNames[1];
+        fireEvent.change(amountInputs[3], { target: { value: "3" } });
+        await user.click(addToCartButtons[3]);
+        fireEvent.change(amountInputs[0], { target: { value: "1" } });
+        await user.click(addToCartButtons[0]);
+        const itemName0 = itemNames[0];
+
+        const cartButton = screen.getByRole("button", { name: /^Cart:\s*6/ });
+        await user.click(cartButton);
+        let removeItemButtons = screen.getAllByRole("button", { name: /remove/i });
+        expect(removeItemButtons.length).toBe(3);
+        await user.click(removeItemButtons[1]);
+        expect(screen.getByRole("button", { name: /^Cart:\s*3/ })).toBeInTheDocument();
+        removeItemButtons = screen.getAllByRole("button", { name: /remove/i });
+        expect(removeItemButtons.length).toBe(2);
+        const headings = screen.getAllByRole("heading");
+        expect(headings[1].textContent).toMatch(itemName1);
+        expect(headings[2].textContent).toMatch(itemName0);
+    });
 });
