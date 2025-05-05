@@ -4,6 +4,15 @@ import CartItemListing from "./CartItemListing";
 function Cart () {
     const { cartItems } = useOutletContext();
 
+    function calculateTotalPrice() {
+        let total = 0;
+        cartItems.forEach((data, id) => {
+            total += data.pricePer * data.amount;
+        });
+
+        return total;
+    }
+
     return (
         <div>
             <h3>Cart</h3>
@@ -11,9 +20,15 @@ function Cart () {
                 {cartItems.size === 0 ? (
                     <div>Your cart is empty</div>
                 ) : (
-                    Array.from(cartItems.entries()).map(([id, data]) => {
-                        return <CartItemListing key={id} data={data}/>;
-                    })
+                    <div>
+                        {Array.from(cartItems.entries()).map(([id, data]) => {
+                            return <CartItemListing key={id} data={data}/>;
+                        })}
+                        <br />
+                        <div>Total: <strong>${calculateTotalPrice()}</strong></div>
+                        <br />
+                        <button onClick={() => console.log("okay let's just pretend you actually bought the stuff")}>Checkout</button>
+                    </div>
                 )}
             </div>
         </div>
