@@ -60,10 +60,23 @@ function App() {
         setCartAmount(amount);
     }
 
+    function removeFromCart(itemId) {
+        const newMap = new Map(cartItems);
+        newMap.delete(itemId);
+
+        let amount = 0;
+        newMap.forEach((data, itemId) => {
+            amount += data.amount;
+        });
+
+        setCartItems(newMap);
+        setCartAmount(amount);
+    }
+
     return (
         <>
             <NavBar amountInCart={cartAmount}/>
-            <Outlet context={{ shopItems, addToCart, cartItems }} />
+            <Outlet context={{ shopItems, addToCart, cartItems, removeFromCart }} />
         </>
     );
 }

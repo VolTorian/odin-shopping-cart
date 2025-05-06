@@ -2,7 +2,7 @@ import { useOutletContext } from "react-router";
 import CartItemListing from "./CartItemListing";
 
 function Cart () {
-    const { cartItems } = useOutletContext();
+    const { cartItems, removeFromCart } = useOutletContext();
 
     function calculateTotalPrice() {
         let total = 0;
@@ -22,7 +22,7 @@ function Cart () {
                 ) : (
                     <div>
                         {Array.from(cartItems.entries()).map(([id, data]) => {
-                            return <CartItemListing key={id} data={data}/>;
+                            return <CartItemListing key={id} data={{id, ...data}} removeFromCartCallback={removeFromCart}/>;
                         })}
                         <br />
                         <div>Total: <strong>${calculateTotalPrice()}</strong></div>
