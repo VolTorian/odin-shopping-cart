@@ -43,7 +43,6 @@ function ItemCard({ data, addToCartCallback }) {
 
     return (
         <div className="item-card">
-            {/* <h3>{data.id}</h3> */}
             <div className="image-container">
                 <img src={data.image} alt={"Image for " + data.title} />
             </div>

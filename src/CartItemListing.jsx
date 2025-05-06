@@ -1,5 +1,4 @@
 function CartItemListing({ data, removeFromCartCallback }) {
-    // console.log(data)
     return (
         <div>
             <div className="cart-item-listing">

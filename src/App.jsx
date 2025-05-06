@@ -26,7 +26,6 @@ function App() {
                     setShopItems((prev) => {
                         const updated = [...prev];
                         updated[i - 1] = data;
-                        // console.log(data.id)
                         return updated;
                     });
                 });
@@ -49,21 +48,17 @@ function App() {
             });
         }
 
-        let amount = 0;
-        newMap.forEach((data, itemId) => {
-            amount += data.amount;
-        });
-
-        // console.log(cartItems)
-
-        setCartItems(newMap);
-        setCartAmount(amount);
+        calculateItemCount(newMap);
     }
 
     function removeFromCart(itemId) {
         const newMap = new Map(cartItems);
         newMap.delete(itemId);
 
+        calculateItemCount(newMap);
+    }
+
+    function calculateItemCount(newMap) {
         let amount = 0;
         newMap.forEach((data, itemId) => {
             amount += data.amount;
