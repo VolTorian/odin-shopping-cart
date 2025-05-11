@@ -10,6 +10,7 @@ body {
     display: flex;
     background-color: cyan;
     justify-content: center;
+    width: 100vw;
 }
 
 .navbar button {
@@ -86,10 +87,18 @@ body {
     height: 100px;
 }
 
+.image-container {
+    align-content: center;
+}
+
 .cart-item-listing > .image-container {
     width: 100px;
 }
 
 .cart-item-info {
     width: 100%;
+}
+
+.cart-item-info > h4 {
+    margin: 0 1rem 1rem 1rem;
 }
