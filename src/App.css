@@ -102,3 +102,7 @@ body {
 .cart-item-info > h4 {
     margin: 0 1rem 1rem 1rem;
 }
+
+.item-details-modal {
+    width: 80vw;
+}

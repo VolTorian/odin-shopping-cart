@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 function ItemCard({ data, addToCartCallback }) {
     const [amount, setAmount] = useState(1);
+    const detailsModal = useRef(null);
 
     function handleAmountChange(e) {
         const newAmount = e.target.value;
@@ -41,6 +42,16 @@ function ItemCard({ data, addToCartCallback }) {
         addToCartCallback(item);
     }
 
+    function toggleDetails() {
+        if (detailsModal.current.open) {
+            console.log("O.o what this should not be reachable")
+            detailsModal.current.close();
+        }
+        else {
+            detailsModal.current.showModal();
+        }
+    }
+
     return (
         <div className="item-card">
             <div className="image-container">
@@ -50,10 +61,16 @@ function ItemCard({ data, addToCartCallback }) {
             <div className="item-rating">{data.rating.rate}/5 out of {data.rating.count} ratings</div>
             <div className="item-price">${data.price.toFixed(2)}</div>
             <div className="item-card-buttons">
-                <button>Details</button>
+                <button onClick={toggleDetails}>Details</button>
                 <input type="number" step="1" min="0" value={amount} onChange={handleAmountChange} onKeyDown={handleKeyDown} onBlur={handleLoseFocus}/>
                 <button onClick={addToCart}>Add to Cart</button>
             </div>
+            <dialog className="item-details-modal" ref={detailsModal}>
+                <h4 className="item-title">{data.title}</h4>
+                <div>{data.description}</div>
+                <br />
+                <button onClick={() => (detailsModal.current.close())}>Close</button>
+            </dialog>
         </div>
     )
 }
